@@ -31,7 +31,7 @@ with open("./your-crystal.json", "w") as poscar:
 ```
 使用方式见 [index.html](./index.html)，绘制结果如下图所示：
 
-<img src="./gen-input/Li3VS4.png" alt="Li3VS4.png" width="400px" hight="400px" justify-content: center;>
+<img src="./gen-input/Li3VS4.png" alt="Li3VS4.png" width="400px" hight="400px" justify-content: center>
 
 ## TODO
 + 增加滑动条分别用于设置 bandCutOff 和 atomCutOff 调整成键和位点的填充。
