@@ -85,6 +85,7 @@ function main(crystal) {
   }, 0));
   let positions = crystal.periodicSite;
   let bonding = crystal.atomicBonding;
+  let unitCell = crystal.unitCell;
 
   twgl.setAttributePrefix("a_");
 
@@ -149,6 +150,31 @@ function main(crystal) {
 
     objects.push(bondNode);
     objectsToDraw.push(bondNode.drawInfo);
+  }
+
+  for (let ii = 0; ii < unitCell.length; ii++) {
+    let cylinderVertices = createCylinderVertices(unitCell[ii][0], unitCell[ii][1], 10, 200);
+    let cylinderBufferInfo = twgl.createBufferInfoFromArrays(gl, cylinderVertices);
+    let programInfo = twgl.createProgramInfo(gl, [vs, fs]);
+    let cylinderVAO = twgl.createVAOFromBufferInfo(gl, programInfo, cylinderBufferInfo);
+
+    let unitCellEdgeOrbitNode = new Node();
+    let unitCellEdgeNode = new Node();
+
+    unitCellEdgeNode.drawInfo = {
+      uniforms: {
+        u_pureColor: [0, 0, 0, 1],
+        u_lightColor: [1, 1, 1]
+      },
+      programInfo: programInfo,
+      bufferInfo: cylinderBufferInfo,
+      vertexArray: cylinderVAO,
+    };
+    unitCellEdgeOrbitNode.setParent(crystalSystemNode);
+    unitCellEdgeNode.setParent(unitCellEdgeOrbitNode);
+
+    objects.push(unitCellEdgeNode);
+    objectsToDraw.push(unitCellEdgeNode.drawInfo);
   }
 
   let rotate = false;

@@ -15,7 +15,7 @@
         }
 
         #crystal {
-            width: 1000px;
+            width: 700px;
             height: 700px;
 
             border: 2px solid black;
@@ -40,8 +40,8 @@
                 return response.json();
             })
             .then(data => {
-                console.log(data.poscar)
                 let crystal = dealPoscarStr(data.poscar);
+                console.log(crystal)
                 main(crystal);
             })
             .catch(error => {
