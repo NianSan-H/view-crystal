@@ -13,7 +13,7 @@
     + 快速方便的将属性及变量绑定到缓冲区
 + m4：一个三维数学库，实现对晶体结构的旋转平移及放大操作
 
-## Usage
+## 使用方式
 仓库仅提供可视化 POSCAR 形式的晶体结构。你需要提供结构的 POSCAR 字符串，这可以通过 pymatgen 获取，使用以下代码：
 ```python
 from pymatgen.core import Strtucture
@@ -29,3 +29,10 @@ with open("./your-crystal.json", "w") as poscar:
     data = {"poscar": structure.to(fmt="poscar")}
     json.dump(data, poscar, indent=4)
 ```
+使用方式见 [index.html](./index.html)，绘制结果如下图所示：
+
+<img src="./gen-input/Li3VS4.png" alt="Li3VS4.png" width="400px" hight="400px">
+
+## TODO
++ 增加滑动条分别用于设置 bandCutOff 和 atomCutOff 调整成键和位点的填充。
++ 新建 canvas 用于显示原子对应的颜色。
