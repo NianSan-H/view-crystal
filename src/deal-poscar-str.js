@@ -20,7 +20,7 @@ let unitCellVertices = [
 ]
 
 // 连接 8 个顶点坐标形成晶格形成 12 条边
-const unitCellVerticesLink = [
+let unitCellVerticesLink = [
     // 下底面 4 边
     [0, 1], [0, 2], [1, 3], [2, 3], 
 
@@ -32,7 +32,7 @@ const unitCellVerticesLink = [
 ]
 
 
-function dealPoscarStr(poscarStr, cutoff = 3.) {
+function dealPoscarStr(poscarStr, bandCutOff = 3., atomCutOff = 0.3) {
     let crystalSite = {};
     let poscarStrList = poscarStr.split("\n");
     let composition = getCompositionByString(poscarStrList[5], poscarStrList[6]);
@@ -64,13 +64,14 @@ function dealPoscarStr(poscarStr, cutoff = 3.) {
         matrixFractionalCoordinateSite.push([sitePosition[0], sitePosition[1], sitePosition[2]]);
     }
 
+    // 填充位点使得可视化结构更加美观
     let elements = composition[0];
+    crystalSite.composition = elements.map(ele => elementInfo[ele]);
+
     let counts = composition[1];
     let repeatedElements = counts.flatMap((count, index) => Array(count).fill(elements[index]));
-    
     [matrixFractionalCoordinateSite, repeatedElements] = 
-                fillCrystalSite(matrixFractionalCoordinateSite, repeatedElements, 0.3)
-    console.log(matrixFractionalCoordinateSite)
+                fillCrystalSite(matrixFractionalCoordinateSite, repeatedElements, atomCutOff)
     matrixFractionalCoordinateSite = translateCoordinates(matrixFractionalCoordinateSite, 0.5)
 
     // 分数坐标转换为笛卡尔坐标
@@ -85,7 +86,7 @@ function dealPoscarStr(poscarStr, cutoff = 3.) {
         let siteA = matrixCartesianCoordinateSites[siteANum];
         for ( let siteBNum=siteANum + 1; siteBNum < matrixCartesianCoordinateSites.length; siteBNum++) {
             let siteB = matrixCartesianCoordinateSites[siteBNum];
-            if (checkBonding(siteA, siteB, cutoff)) {
+            if (checkBonding(siteA, siteB, bandCutOff)) {
                 bondingList.push([siteANum, siteBNum])
             }
         }
@@ -114,6 +115,8 @@ function dealPoscarStr(poscarStr, cutoff = 3.) {
         Site.elementType = elementInfo[repeatedElements[ii]];
         crystalSite.periodicSite.push(Site)
     }
+
+    console.log(crystalSite)
     return crystalSite
 }
 

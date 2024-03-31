@@ -73,8 +73,7 @@ Node.prototype.updateWorldMatrix = function (matrix) {
   });
 };
 
-function main(crystal) {
-  let canvas = document.querySelector("#crystal");
+function drawCrystal(canvas, crystal) {
   let gl = canvas.getContext("webgl2");
   if (!gl) {
     return;
@@ -94,7 +93,7 @@ function main(crystal) {
 
   let crystalSystemNode = new Node();
   let lightDirection = [0, 0, -1];
-  let sphereVertices = twgl.primitives.createSphereVertices(15, 200, 200);
+  let sphereVertices = twgl.primitives.createSphereVertices(15, 50, 50);
   let sphereBufferInfo = twgl.createBufferInfoFromArrays(gl, sphereVertices);
   let programInfo = twgl.createProgramInfo(gl, [vs, fs]);
   let sphereVAO = twgl.createVAOFromBufferInfo(gl, programInfo, sphereBufferInfo);
@@ -128,7 +127,7 @@ function main(crystal) {
 
   // 绘制原子间键合
   for (let jj = 0; jj < bonding.length; jj++) {
-    let cylinderVertices = createCylinderVertices(bonding[jj][0], bonding[jj][1], 30, 200);
+    let cylinderVertices = createCylinderVertices(bonding[jj][0], bonding[jj][1], 30, 30);
     let cylinderBufferInfo = twgl.createBufferInfoFromArrays(gl, cylinderVertices);
     let programInfo = twgl.createProgramInfo(gl, [vs, fs]);
     let cylinderVAO = twgl.createVAOFromBufferInfo(gl, programInfo, cylinderBufferInfo);
@@ -153,7 +152,7 @@ function main(crystal) {
   }
 
   for (let ii = 0; ii < unitCell.length; ii++) {
-    let cylinderVertices = createCylinderVertices(unitCell[ii][0], unitCell[ii][1], 10, 200);
+    let cylinderVertices = createCylinderVertices(unitCell[ii][0], unitCell[ii][1], 8, 30);
     let cylinderBufferInfo = twgl.createBufferInfoFromArrays(gl, cylinderVertices);
     let programInfo = twgl.createProgramInfo(gl, [vs, fs]);
     let cylinderVAO = twgl.createVAOFromBufferInfo(gl, programInfo, cylinderBufferInfo);
@@ -211,7 +210,7 @@ function main(crystal) {
   function updataScene(cameraPosition, rotationList) {
     let aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
     let projectionMatrix =
-      m4.perspective(Math.PI / 2, aspect, 1, 3 * distance);
+      m4.perspective(Math.PI / 2, aspect, 1, 5 * distance);
     let cameraMatrix = m4.lookAt(cameraPosition, [0, 0, 0], [0, 1, 0]);
 
     let viewMatrix = m4.inverse(cameraMatrix);
@@ -259,6 +258,14 @@ function main(crystal) {
 }
 
 
+import { dealPoscarStr } from './deal-poscar-str.js';
 
+let bandCutOff = 2.8;
+let atomCutoff = 0.3;
+
+function main(poscarStr) {
+  let canvas = document.querySelector("#crystal");
+  drawCrystal(canvas, dealPoscarStr(poscarStr, bandCutOff, atomCutoff))
+}
 
 export { main }

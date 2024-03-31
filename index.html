@@ -25,10 +25,8 @@
 
 <body>
     <canvas id="crystal"></canvas>
-
     <script type="module">
         import { main } from "./src/draw-crystal.js";
-        import { dealPoscarStr } from './src/deal-poscar-str.js';
 
         let url = "http://127.0.0.1:5500/gen-input/Li3VS4.json"
 
@@ -40,9 +38,7 @@
                 return response.json();
             })
             .then(data => {
-                let crystal = dealPoscarStr(data.poscar);
-                console.log(crystal)
-                main(crystal);
+                main(data.poscar);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
