@@ -1,4 +1,4 @@
-let elementInfo = {
+ export const elementInfo = {
     "H": {
         "symbol": "H",
         "radius": 3.1,

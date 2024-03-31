@@ -22,7 +22,7 @@ function dealPoscarStr(poscarStr) {
     for ( readLine; readLine<totalSiteNums; readLine++ ) {
         // 获得分数位点坐标并平移
         let sitePosition = getNumListByString(poscarStrList[readLine]).map((axis) => axis-0.5)
-        matrixFractionalCoordinateSite.push(sitePosition);
+        matrixFractionalCoordinateSite.push([sitePosition[0], sitePosition[1], sitePosition[2]]);
     }
     // 分数坐标转换为笛卡尔坐标
     let matrixCartesianCoordinateSites = getCartesianCoordinateSite(
@@ -120,4 +120,6 @@ function getDistance(siteA, siteB) {
 }
 
 
-export {dealPoscarStr}
+import { elementInfo } from "./element-info.js";
+
+export { dealPoscarStr }

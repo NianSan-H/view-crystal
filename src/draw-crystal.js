@@ -1,3 +1,5 @@
+import { createCylinderVertices } from "./create-cylinder.js"
+
 let vs = `#version 300 es
 in vec4 a_position;
 in vec4 a_color;
@@ -72,7 +74,7 @@ Node.prototype.updateWorldMatrix = function (matrix) {
 };
 
 function main(crystal) {
-  let canvas = document.querySelector("#Sphere");
+  let canvas = document.querySelector("#crystal");
   let gl = canvas.getContext("webgl2");
   if (!gl) {
     return;
@@ -231,15 +233,6 @@ function main(crystal) {
 }
 
 
-import { fetchData } from '../lib/custom_library/fetch-data.js';
-import { dealPoscarStr } from './deal-poscar-str.js';
 
-fetchData('https://raw.githubusercontent.com/NianSan-H/rowdata/main/GeBi12O20-247.json')
-  .then(data => {
-    if (data) {
-      let crystal = dealPoscarStr(data.poscar);
-      main(crystal);
-    } else {
-      console.log('数据获取失败');
-    }
-  });
+
+export { main }
