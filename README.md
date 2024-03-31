@@ -18,6 +18,14 @@
 ```python
 from pymatgen.core import Strtucture
 
-structure = Structure.from_file("./your poscar path/structure_file")
+structure = Structure.from_file("./your poscar path/structure-file")
 print(structure.to(fmt="poscar"))
+
+
+# 你可以使用以下代码将字符串输出到 json 文件
+import json
+
+with open("./your-crystal.json", "w") as poscar:
+    data = {"poscar": structure.to(fmt="poscar")}
+    json.dump(data, poscar, indent=4)
 ```
