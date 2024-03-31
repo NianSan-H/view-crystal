@@ -18,6 +18,6 @@
 ```python
 from pymatgen.core import Strtucture
 
-structure = Structure.from_file("./your poscar path/POSCAR")
+structure = Structure.from_file("./your poscar path/structure_file")
 print(structure.to(fmt="poscar"))
 ```
