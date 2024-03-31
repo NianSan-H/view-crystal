@@ -6,4 +6,11 @@
 + [场景图绘制参考](https://webgl2fundamentals.org/webgl/lessons/zh_cn/webgl-scene-graph.html)
 
 
+## 使用的外部模块
+仓库使用的外部模块均参考自 WebGL 官方文档教程，以下说明使用这些模块做了什么：
++ twgl：https://twgljs.org/
+    + 生成球的顶点坐标及纹理
+    + 快速方便的将属性及变量绑定到缓冲区
++ m4：一个三维数学库，实现对晶体结构的旋转平移及放大操作
+
 ## Usage
