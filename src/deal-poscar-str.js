@@ -116,7 +116,6 @@ function dealPoscarStr(poscarStr, bandCutOff = 3., atomCutOff = 0.3) {
         crystalSite.periodicSite.push(Site)
     }
 
-    console.log(crystalSite)
     return crystalSite
 }
 
