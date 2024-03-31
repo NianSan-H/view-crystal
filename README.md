@@ -14,3 +14,10 @@
 + m4：一个三维数学库，实现对晶体结构的旋转平移及放大操作
 
 ## Usage
+仓库仅提供可视化 POSCAR 形式的晶体结构。你需要提供结构的 POSCAR 字符串，这可以通过 pymatgen 获取，使用以下代码：
+```python
+from pymatgen.core import Strtucture
+
+structure = Structure.from_file("./your poscar path/POSCAR")
+print(structure.to(fmt="poscar"))
+```
