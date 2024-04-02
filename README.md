@@ -29,10 +29,11 @@ with open("./your-crystal.json", "w") as poscar:
     data = {"poscar": structure.to(fmt="poscar")}
     json.dump(data, poscar, indent=4)
 ```
-使用方式见 [index.html](./index.html)，绘制结果如下图所示：
+具体的使用方式见 [index.html](./index.html)，绘制结果如下图所示：
 
-<img src="./gen-input/Li3VS4.png#pic" alt="Li3VS4.png" style="width: 400px"/>
+<img src="./gen-input/Li3VS4.png#pic" alt="Li3VS4.png" style="width: 400px; height: 400px"/>
 
 ## TODO
 + 增加滑动条分别用于设置 bandCutOff 和 atomCutOff 调整成键和位点的填充。
+    > 由于每次更新 bandCutOff 和 atomCutOff 都需要重新计算周期性位点及成键，这使得晶体结构需要重新渲染，滑动条实时更新显然不太现实。这里可以选择改为使用输入框绑定 bandCutOff 和 atomCutOff，随后通过按钮点击更新输入框即可。
 + 新建 canvas 用于显示原子对应的颜色。
