@@ -1,77 +1,7 @@
 import { createCylinderVertices } from "./create-cylinder.js"
+import { vs, fs } from "./shader.js"
+import { Node } from "./node.js"
 
-let vs = `#version 300 es
-in vec4 a_position;
-in vec4 a_color;
-in vec3 a_normal;
-
-uniform mat4 u_matrix;
-uniform vec3 u_lightDirection;
-
-out vec4 v_color;
-out float v_lightWeight;
-
-void main() {
-    vec3 normal = normalize((u_matrix * vec4(a_normal, 0.0)).xyz);
-    float nDotL = max(dot(normal, normalize(u_lightDirection)), 0.0);
-    v_lightWeight = nDotL;
-
-    gl_Position = u_matrix * a_position;
-    v_color = a_color;
-}`;
-
-let fs = `#version 300 es
-precision highp float;
-
-in float v_lightWeight;
-in vec4 v_color;
-
-uniform vec4 u_pureColor;
-uniform vec3 u_lightColor;
-
-out vec4 outColor;
-
-void main() {
-    vec3 ambientComponent = vec3(0.25, 0.25, 0.25);
-    vec3 lightEffect = u_lightColor * v_lightWeight;
-    vec3 color = (u_pureColor.rgb * lightEffect) + ambientComponent;
-    float alpha = u_pureColor.a;
-
-    outColor = vec4(color, alpha);
-}`;
-
-let Node = function () {
-  this.children = [];
-  this.localMatrix = m4.identity();
-  this.worldMatrix = m4.identity();
-};
-
-Node.prototype.setParent = function (parent) {
-  if (this.parent) {
-    let ndx = this.parent.children.indexOf(this);
-    if (ndx >= 0) {
-      this.parent.children.splice(ndx, 1);
-    }
-  }
-
-  if (parent) {
-    parent.children.push(this);
-  }
-  this.parent = parent;
-};
-
-Node.prototype.updateWorldMatrix = function (matrix) {
-  if (matrix) {
-    m4.multiply(matrix, this.localMatrix, this.worldMatrix);
-  } else {
-    m4.copy(this.localMatrix, this.worldMatrix);
-  }
-
-  let worldMatrix = this.worldMatrix;
-  this.children.forEach(function (child) {
-    child.updateWorldMatrix(worldMatrix);
-  });
-};
 
 function drawCrystal(canvas, crystal) {
   let gl = canvas.getContext("webgl2");
@@ -265,7 +195,8 @@ let atomCutoff = 0.3;
 
 function main(poscarStr) {
   let canvas = document.querySelector("#crystal");
-  drawCrystal(canvas, dealPoscarStr(poscarStr, bandCutOff, atomCutoff))
+  let crystal = dealPoscarStr(poscarStr, bandCutOff, atomCutoff)
+  drawCrystal(canvas, crystal)
 }
 
 export { main }
