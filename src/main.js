@@ -9,8 +9,7 @@ function main(poscarStr) {
     let canvasCrystal = document.querySelector("#crystal");
     let crystal = dealPoscarStr(poscarStr, bandCutOff, atomCutoff)
 
-    drawCrystalInfo(canvasCrystal, crystal)
-
+    drawCrystalInfo(canvasCrystal, crystal.composition)
     drawCrystal(canvasCrystal, crystal)
 }
 

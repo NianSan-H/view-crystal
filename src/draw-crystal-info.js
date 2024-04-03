@@ -1,20 +1,18 @@
-function drawElements(canvas, composition) {
+function drawElements(canvas, composition, elementProp) {
     let ctx = canvas.getContext("2d");
 
-    console.log(composition)
     for (let ii = 0; ii < composition.length; ii++) {
         let element = composition[ii]
-        let color = `rgb(${Math.round(element.color[0] * 255)}, 
-                         ${Math.round(element.color[1] * 255)}, 
-                         ${Math.round(element.color[2] * 255)})`;
+        let color = [Math.round(element.color[0] * 255), 
+                     Math.round(element.color[1] * 255), 
+                     Math.round(element.color[2] * 255)];
 
         let canvasWidth = canvas.width;
-        let canvasHeight = canvas.height;
         let centerX = canvasWidth / 4;
-        let centerY = canvasHeight / 5 * (ii + 1) - canvasHeight / 10;
-        let radius = element.radius * canvasWidth / 150;
+        let centerY = elementProp * ( 2 * ii + 1 );
+        let radius = element.radius * elementProp / 30;
 
-        let fontStyle = `bold ${canvasWidth / 6}px serif`;
+        let fontStyle = `bold ${elementProp}px serif`;
         let fontOffset = canvasWidth / 3;
 
         drawSphere(ctx, centerX, centerY, color, radius);
@@ -26,9 +24,10 @@ function drawElements(canvas, composition) {
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, 2 * Math.PI);
 
-        var gradient = ctx.createRadialGradient(x, y, radius, x, y, radius / 3, radius);
-        gradient.addColorStop(0, "#666666");
-        gradient.addColorStop(1, color);
+        let gradient = ctx.createRadialGradient(x, y, radius, x, y, radius / 5, radius);
+        gradient.addColorStop(0, `rgb(110, 110, 110)`);
+        gradient.addColorStop(0.5, `rgb(${color})`);
+        gradient.addColorStop(1, `rgb(${color[0] * 1.1}, ${color[1] * 1.1}, ${color[2] * 1.1})`);
 
         ctx.fillStyle = gradient;
         ctx.arc(x, y, radius, 0, 2 * Math.PI);
@@ -44,34 +43,35 @@ function drawElements(canvas, composition) {
 }
 
 
-function createChildCanvas(canvasCrystal, canvasElement, width, height, left, top) {
+function createChildCanvas(canvasCrystal, canvasElement, width, height, top, left) {
     canvasElement.width = width;
     canvasElement.height = height;
-    canvasElement.style.position = "absolute";
-    canvasElement.style.left = left;
+    canvasElement.style.position = "relative";
     canvasElement.style.top = top;
+    canvasElement.style.left = left;
+
     canvasCrystal.parentNode.appendChild(canvasElement);
 }
 
 
-function drawCrystalInfo(canvasCrystal, crystal) {
-    let composition = crystal.composition
-    let canvasCrystalRect = canvasCrystal.getBoundingClientRect();
-    let canvasCrystalStyle = getComputedStyle(canvasCrystal);
-    let canvasCrystalWidth = parseInt(canvasCrystalStyle.getPropertyValue("width"));
-    let canvasCrystalHeight = parseInt(canvasCrystalStyle.getPropertyValue("height"));
+function drawCrystalInfo(canvasCrystal, composition) {
+    let canvasElement = document.getElementById("composition");
 
-    let canvasElement = document.createElement("canvas");
-    createChildCanvas(
-        canvasCrystal,
-        canvasElement,
-        canvasCrystalWidth / 5,
-        composition.length * (canvasCrystalHeight / 10),
-        `${canvasCrystalRect.left}px`,
-        `${canvasCrystalRect.top}px`,
-    )
+    if (!canvasElement) {
+        canvasElement = document.createElement("canvas");
+        canvasElement.setAttribute("id", "composition");
+        createChildCanvas(
+            canvasCrystal,
+            canvasElement,
+            canvasCrystal.offsetWidth / 5,
+            composition.length * (canvasCrystal.offsetHeight / 10),
 
-    drawElements(canvasElement, composition)
+            `-${canvasCrystal.offsetHeight}px`,
+            `0px`,
+        )
+    }
+
+    drawElements(canvasElement, composition, canvasCrystal.offsetHeight / 20)
 }
 
 

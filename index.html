@@ -9,11 +9,15 @@
     <script src="./lib/twgl-full.min.js" defer></script>
     <style>
         body {
-            display: flex;
+            display: grid;
             align-items: center;
             justify-content: center;
         }
 
+        div {
+            display: grid;
+        }
+        
         #crystal {
             width: 600px;
             height: 600px;
@@ -23,7 +27,9 @@
 </head>
 
 <body>
-    <canvas id="crystal"></canvas>
+    <div>
+        <canvas id="crystal"></canvas>
+    </div>
     <script type="module">
         import { main } from "./src/main.js";
 

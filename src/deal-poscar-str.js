@@ -5,7 +5,7 @@ let matrixRotation = [
 ]
 
 // 使用分数坐标确定晶格的 8 个顶点
-let unitCellVertices = [
+let unitCellVerticesOrigin = [
     // 下底面 4 点
     [0, 0, 0],
     [1, 0, 0],
@@ -42,7 +42,7 @@ function dealPoscarStr(poscarStr, bandCutOff = 3., atomCutOff = 0.3) {
                               getNumListByString(poscarStrList[4])];
     
     // 根据基矢生成 unit cell
-    unitCellVertices = translateCoordinates(unitCellVertices, 0.5)
+    let unitCellVertices = translateCoordinates(unitCellVerticesOrigin, 0.5)
     let unitCellCoordinateVertices = matrixMultiply(unitCellVertices, crystalSite.baseVector)
     unitCellCoordinateVertices = matrixMultiply(unitCellCoordinateVertices,[[400, 0, 0], [0, 400, 0], [0, 0, 400]]);
     unitCellCoordinateVertices = matrixMultiply(unitCellCoordinateVertices, matrixRotation)
