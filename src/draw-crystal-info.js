@@ -10,12 +10,12 @@ function drawElements(canvas, composition) {
 
         let canvasWidth = canvas.width;
         let canvasHeight = canvas.height;
-        let centerX = canvasWidth / 6;
-        let centerY = canvasHeight / 5 * (ii + 1) - 10;
-        let radius = element.radius;
+        let centerX = canvasWidth / 4;
+        let centerY = canvasHeight / 5 * (ii + 1) - canvasHeight / 10;
+        let radius = element.radius * canvasWidth / 150;
 
-        let fontStyle = `${canvasWidth / 6}px serif`;
-        let fontOffset = canvasWidth / 5;
+        let fontStyle = `bold ${canvasWidth / 6}px serif`;
+        let fontOffset = canvasWidth / 3;
 
         drawSphere(ctx, centerX, centerY, color, radius);
         drawText(ctx, fontStyle, centerX + fontOffset, centerY, element.symbol)
