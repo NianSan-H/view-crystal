@@ -27,7 +27,7 @@ function drawElements(canvas, composition, elementProp) {
         let gradient = ctx.createRadialGradient(x, y, radius, x, y, radius / 5, radius);
         gradient.addColorStop(0, `rgb(110, 110, 110)`);
         gradient.addColorStop(0.5, `rgb(${color})`);
-        gradient.addColorStop(1, `rgb(${color[0] * 1.1}, ${color[1] * 1.1}, ${color[2] * 1.1})`);
+        gradient.addColorStop(1, `rgb(${color[0] * 1.2}, ${color[1] * 1.2}, ${color[2] * 1.2})`);
 
         ctx.fillStyle = gradient;
         ctx.arc(x, y, radius, 0, 2 * Math.PI);
@@ -36,6 +36,7 @@ function drawElements(canvas, composition, elementProp) {
 
     function drawText(ctx, fontStyle, x, y, text) {
         ctx.font = fontStyle;
+        ctx.fillStyle = "black";
         ctx.textAlign = "left";
         ctx.textBaseline = "middle";
         ctx.fillText(text, x, y);
