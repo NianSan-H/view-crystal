@@ -34,7 +34,7 @@ with open("./your-crystal.json", "w") as poscar:
 <img src="./gen-input/Li3VS4.png#pic" alt="Li3VS4.png" style="width: 400px; height: 400px"/>
 
 ## TODO
-+ 增加滑动条分别用于设置 bandCutOff 和 atomCutOff 调整成键和位点的填充。
-    > 由于每次更新 bandCutOff 和 atomCutOff 都需要重新计算周期性位点及成键，这使得晶体结构需要重新渲染，滑动条实时更新显然不太现实。这里可以选择改为使用输入框绑定 bandCutOff 和 atomCutOff，随后通过按钮点击更新输入框即可。
++ 增加滑动条分别用于设置 bondCutOff 和 atomCutOff 调整成键和位点的填充。
+    > 由于每次更新 bondCutOff 和 atomCutOff 都需要重新计算周期性位点及成键，这使得晶体结构需要重新渲染，滑动条实时更新显然不太现实。这里可以选择改为使用输入框绑定 bondCutOff 和 atomCutOff，随后通过按钮点击更新输入框即可。
 + 新建 canvas 用于显示原子对应的颜色。
     > 已通过使用新建 canvas 的方式完成，使用 canvas 的渐变填充模拟 3D 光照效果，勉强能凑合看，元素字体不好看，自行修改，这里需要使用盒子把 canvas 元素包裹起来，并设置布局为 grid 布局。
