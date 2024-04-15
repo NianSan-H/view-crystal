@@ -32,7 +32,7 @@ let unitCellVerticesLink = [
 ]
 
 
-function dealPoscarStr(poscarStr, bandCutOff = 3., atomCutOff = 0.3) {
+function dealPoscarStr(poscarStr, bondCutOff = 3., atomCutOff = 0.3) {
     let crystalSite = {};
     let poscarStrList = poscarStr.split("\n");
     let composition = getCompositionByString(poscarStrList[5], poscarStrList[6]);
@@ -86,7 +86,7 @@ function dealPoscarStr(poscarStr, bandCutOff = 3., atomCutOff = 0.3) {
         let siteA = matrixCartesianCoordinateSites[siteANum];
         for ( let siteBNum=siteANum + 1; siteBNum < matrixCartesianCoordinateSites.length; siteBNum++) {
             let siteB = matrixCartesianCoordinateSites[siteBNum];
-            if (checkBonding(siteA, siteB, bandCutOff)) {
+            if (checkBonding(siteA, siteB, bondCutOff)) {
                 bondingList.push([siteANum, siteBNum])
             }
         }
